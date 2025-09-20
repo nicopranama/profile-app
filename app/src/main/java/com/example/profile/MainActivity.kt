@@ -1,21 +1,23 @@
 // MainActivity.kt
 package com.example.profile
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -30,7 +32,7 @@ class MainActivity : ComponentActivity() {
             MaterialTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
+                    color = Color(0xFF1A1A1A)
                 ) {
                     ProfileScreen()
                 }
@@ -41,153 +43,132 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun ProfileScreen() {
-    Column(
+    val context = LocalContext.current
+    val instagramUrl = "https://www.instagram.com/nico.pranama?igsh=MTNpbGk1cTlmdDF6MQ=="
+    val linkedinUrl = "https://www.linkedin.com/in/nico-pranama-5ba689318/"
+
+    Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(
-                color = Color(0xFFF5F5F5)
-            )
-            .padding(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
+            .background(Color(0xFF1A1A1A))
+            .padding(24.dp),
+        contentAlignment = Alignment.Center
     ) {
-        // Profile Card
         Card(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(8.dp),
+                .width(280.dp)
+                .wrapContentHeight(),
             shape = RoundedCornerShape(16.dp),
-            elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
-            colors = CardDefaults.cardColors(containerColor = Color.White)
+            colors = CardDefaults.cardColors(containerColor = Color(0xFF2D2D2D)),
+            elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
         ) {
             Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(24.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
+                modifier = Modifier.fillMaxWidth()
             ) {
                 // Profile Image
-                Image(
-                    painter = painterResource(id = R.drawable.profile_image),
-                    contentDescription = "Profile Picture",
+                Card(
                     modifier = Modifier
-                        .size(120.dp)
-                        .clip(CircleShape),
-                    contentScale = ContentScale.Crop
-                )
-                Spacer(modifier = Modifier.height(16.dp))
-
-                // Nama
-                Text(
-                    text = "Nico Pranama Hadi",
-                    fontSize = 24.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = Color(0xFF1A1A1A),
-                    textAlign = TextAlign.Center
-                )
-
-                Spacer(modifier = Modifier.height(8.dp))
-
-                // NIM
-                Card(
-                    modifier = Modifier.fillMaxWidth(),
-                    shape = RoundedCornerShape(8.dp),
-                    colors = CardDefaults.cardColors(containerColor = Color(0xFFE3F2FD))
+                        .fillMaxWidth()
+                        .height(160.dp),
+                    shape = RoundedCornerShape(
+                        topStart = 16.dp,
+                        topEnd = 16.dp,
+                        bottomStart = 0.dp,
+                        bottomEnd = 0.dp
+                    ),
+                    colors = CardDefaults.cardColors(containerColor = Color.Transparent)
                 ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.profile_image),
+                        contentDescription = "Profile Picture",
+                        modifier = Modifier.fillMaxSize(),
+                        contentScale = ContentScale.Crop
+                    )
+                }
+
+                // Content section
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp)
+                ) {
+                    // Name
+                    Text(
+                        text = "Nico Pranama Hadi",
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = Color.White,
+                        textAlign = TextAlign.Start,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+
+                    Spacer(modifier = Modifier.height(4.dp))
+
+                    // Description
+                    Text(
+                        text = "Computer Science student who focuses on backend development",
+                        fontSize = 14.sp,
+                        color = Color(0xFF9E9E9E),
+                        textAlign = TextAlign.Start,
+                        lineHeight = 18.sp,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+
+                    Spacer(modifier = Modifier.height(16.dp))
+
+                    // Social media links
                     Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(12.dp),
-                        horizontalArrangement = Arrangement.Center,
-                        verticalAlignment = Alignment.CenterVertically
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
-                        Text(
-                            text = "NIM: ",
-                            fontSize = 16.sp,
-                            fontWeight = FontWeight.Medium,
-                            color = Color(0xFF1976D2)
-                        )
-                        Text(
-                            text = "2702344204",
-                            fontSize = 16.sp,
-                            fontWeight = FontWeight.Bold,
-                            color = Color(0xFF1976D2)
-                        )
+                        // Instagram button
+                        Box(
+                            modifier = Modifier
+                                .weight(1f)
+                                .height(36.dp)
+                                .background(
+                                    color = Color(0xFF404040),
+                                    shape = RoundedCornerShape(18.dp)
+                                )
+                                .clickable {
+                                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(instagramUrl))
+                                    context.startActivity(intent)
+                                },
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text(
+                                text = "Instagram",
+                                fontSize = 14.sp,
+                                fontWeight = FontWeight.Medium,
+                                color = Color.White
+                            )
+                        }
+
+                        // LinkedIn button
+                        Box(
+                            modifier = Modifier
+                                .weight(1f)
+                                .height(36.dp)
+                                .background(
+                                    color = Color(0xFF404040),
+                                    shape = RoundedCornerShape(18.dp)
+                                )
+                                .clickable {
+                                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://$linkedinUrl"))
+                                    context.startActivity(intent)
+                                },
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text(
+                                text = "LinkedIn",
+                                fontSize = 14.sp,
+                                fontWeight = FontWeight.Medium,
+                                color = Color.White
+                            )
+                        }
                     }
-                }
-
-                Spacer(modifier = Modifier.height(12.dp))
-
-                // Jurusan
-                Card(
-                    modifier = Modifier.fillMaxWidth(),
-                    shape = RoundedCornerShape(8.dp),
-                    colors = CardDefaults.cardColors(containerColor = Color(0xFFE8F5E8))
-                ) {
-                    Column(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(16.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        Text(
-                            text = "Jurusan",
-                            fontSize = 14.sp,
-                            fontWeight = FontWeight.Medium,
-                            color = Color(0xFF388E3C)
-                        )
-                        Text(
-                            text = "Teknik Informatika",
-                            fontSize = 18.sp,
-                            fontWeight = FontWeight.Bold,
-                            color = Color(0xFF2E7D32),
-                            textAlign = TextAlign.Center
-                        )
-                    }
-                }
-
-                Spacer(modifier = Modifier.height(16.dp))
-
-                // Additional Info
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceEvenly
-                ) {
-                    InfoChip(
-                        label = "Semester",
-                        value = "5"
-                    )
-                    InfoChip(
-                        label = "Tahun",
-                        value = "2025"
-                    )
                 }
             }
-        }
-    }
-}
-
-@Composable
-fun InfoChip(label: String, value: String) {
-    Card(
-        shape = RoundedCornerShape(20.dp),
-        colors = CardDefaults.cardColors(containerColor = Color(0xFFFFF3E0))
-    ) {
-        Column(
-            modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Text(
-                text = label,
-                fontSize = 12.sp,
-                color = Color(0xFFE65100)
-            )
-            Text(
-                text = value,
-                fontSize = 16.sp,
-                fontWeight = FontWeight.Bold,
-                color = Color(0xFFBF360C)
-            )
         }
     }
 }
@@ -198,25 +179,4 @@ fun ProfileScreenPreview() {
     MaterialTheme {
         ProfileScreen()
     }
-}
-
-// ProfileData.kt - Data class untuk profile
-data class Profile(
-    val nama: String,
-    val nim: String,
-    val jurusan: String,
-    val semester: Int,
-    val tahun: Int,
-    val fotoUrl: String? = null
-)
-
-// Contoh penggunaan data class
-fun getProfileData(): Profile {
-    return Profile(
-        nama = "Nico Pranama Hadi",
-        nim = "2702344204",
-        jurusan = "Teknik Informatika",
-        semester = 5,
-        tahun = 2025
-    )
 }
