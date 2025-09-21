@@ -44,8 +44,8 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun ProfileScreen() {
     val context = LocalContext.current
-    val instagramUrl = "https://www.instagram.com/nico.pranama?igsh=MTNpbGk1cTlmdDF6MQ=="
-    val linkedinUrl = "https://www.linkedin.com/in/nico-pranama-5ba689318/"
+    val instagramUrl = "www.instagram.com/nico.pranama?igsh=MTNpbGk1cTlmdDF6MQ=="
+    val linkedinUrl = "www.linkedin.com/in/nico-pranama-5ba689318/"
 
     Box(
         modifier = Modifier
@@ -154,7 +154,7 @@ fun ProfileScreen() {
                                     shape = RoundedCornerShape(18.dp)
                                 )
                                 .clickable {
-                                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://$linkedinUrl"))
+                                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(linkedinUrl))
                                     context.startActivity(intent)
                                 },
                             contentAlignment = Alignment.Center
