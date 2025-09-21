@@ -44,8 +44,8 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun ProfileScreen() {
     val context = LocalContext.current
-    val instagramUrl = "www.instagram.com/nico.pranama?igsh=MTNpbGk1cTlmdDF6MQ=="
-    val linkedinUrl = "www.linkedin.com/in/nico-pranama-5ba689318/"
+    val instagramUrl = "https://www.instagram.com/nico.pranama?igsh=MTNpbGk1cTlmdDF6MQ=="
+    val linkedinUrl = "https://www.linkedin.com/in/nico-pranama-5ba689318/"
 
     Box(
         modifier = Modifier
