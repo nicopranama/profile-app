@@ -1,4 +1,4 @@
-package com.example.profile.ui.screens
+package com.example.profile.ui.screens.
 
 import android.content.Intent
 import androidx.compose.foundation.Image
